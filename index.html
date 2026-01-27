@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agente de Viajes IA - LOCAL</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* ESTILOS ORIGINALES MANTENIDOS */
+        :root {
+            --primary: #6C63FF;
+            --glass: rgba(255, 255, 255, 0.1);
+            --border: rgba(255, 255, 255, 0.2);
+        }
+
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #141E30, #243B55);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            flex-direction: column;
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding: 10px 20px;
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .footer-brand {
+            font-weight: 600;
+            background: linear-gradient(45deg, #FF512F, #DD2476);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .card {
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 0;
+            font-weight: 600;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            color: white;
+            font-family: inherit;
+            box-sizing: border-box;
+        }
+
+        input:focus,
+        textarea:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .btn-search {
+            background: linear-gradient(45deg, #FF512F, #DD2476);
+            color: white;
+        }
+
+        .btn-search:hover {
+            transform: scale(1.02);
+        }
+
+        .result-box {
+            display: none;
+            margin-top: 25px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            border-left: 4px solid #FF512F;
+        }
+
+        .spinner {
+            display: none;
+            width: 30px;
+            height: 30px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s infinite linear;
+            margin: 20px auto;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .route-toggle-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .toggle-checkbox {
+            display: none;
+        }
+
+        .toggle-label {
+            position: relative;
+            width: 100%;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 25px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 5px;
+        }
+
+        .toggle-btn {
+            position: absolute;
+            width: 50%;
+            height: 42px;
+            background: linear-gradient(45deg, #FF512F, #DD2476);
+            border-radius: 22px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            left: 4px;
+            z-index: 1;
+        }
+
+        .toggle-text-left,
+        .toggle-text-right {
+            width: 50%;
+            text-align: center;
+            z-index: 2;
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .toggle-checkbox:checked+.toggle-label .toggle-btn {
+            left: calc(50% - 4px);
+        }
+
+        .toggle-checkbox:not(:checked)+.toggle-label .toggle-text-left {
+            color: white;
+        }
+
+        .toggle-checkbox:checked+.toggle-label .toggle-text-right {
+            color: white;
+        }
+
+        .duration-container {
+            margin-bottom: 20px;
+        }
+
+        .duration-label {
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            color: rgba(255, 255, 255, 0.8);
+            text-align: left;
+            display: block;
+        }
+
+        .duration-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .duration-btn,
+        .day-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 10px 5px;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+        }
+
+        .duration-btn:hover,
+        .day-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .duration-btn.active {
+            background: linear-gradient(45deg, #FF512F, #DD2476);
+            font-weight: bold;
+            transform: scale(1.05);
+        }
+
+        .day-btn.active {
+            background: linear-gradient(45deg, #11998e, #38ef7d);
+            font-weight: bold;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="card">
+        <h1>✈️ Guía IA</h1>
+        <p style="opacity: 0.8; margin-bottom: 20px;">Describe tu viaje y obtén la ruta perfecta.</p>
+
+        <form id="travelForm">
+            <input type="text" id="location" placeholder="¿Dónde estás? (Ej: Madrid, España...)" required>
+            <input type="text" id="exactLocation" placeholder="Punto de inicio exacto (Opcional)">
+
+            <div class="route-toggle-container" style="margin-bottom: 20px;">
+                <input type="checkbox" id="dayToggle" class="toggle-checkbox">
+                <label for="dayToggle" class="toggle-label" style="background: rgba(255, 255, 255, 0.05);">
+                    <span class="toggle-text-left">1 Día 📅</span>
+                    <span class="toggle-btn" style="background: linear-gradient(45deg, #11998e, #38ef7d);"></span>
+                    <span class="toggle-text-right">Varios Días 🗓️</span>
+                </label>
+            </div>
+
+            <div id="dayCountContainer" class="duration-container" style="display: none;">
+                <label class="duration-label">📅 ¿Cuántos días?</label>
+                <div class="duration-grid" style="grid-template-columns: repeat(3, 1fr);">
+                    <button type="button" class="day-btn active" data-days="2">2 Días</button>
+                    <button type="button" class="day-btn" data-days="3">3 Días</button>
+                    <button type="button" class="day-btn" data-days="4">4 Días</button>
+                </div>
+            </div>
+            <input type="hidden" id="daysCount" value="1">
+
+            <div class="route-toggle-container">
+                <input type="checkbox" id="routeTypeToggle" class="toggle-checkbox">
+                <label for="routeTypeToggle" class="toggle-label">
+                    <span class="toggle-text-left">Lineal 📏</span>
+                    <span class="toggle-btn"></span>
+                    <span class="toggle-text-right">Circular 🔄</span>
+                </label>
+            </div>
+
+            <textarea id="interest" placeholder="¿Qué quieres ver? (Ej: Sitios curiosos y comida rica)" rows="3"
+                required></textarea>
+
+            <div class="duration-container">
+                <label class="duration-label">⏱️ Duración diaria:</label>
+                <div class="duration-grid">
+                    <button type="button" class="duration-btn" data-time="60">1h</button>
+                    <button type="button" class="duration-btn active" data-time="90">1.5h</button>
+                    <button type="button" class="duration-btn" data-time="120">2h</button>
+                    <button type="button" class="duration-btn" data-time="180">3h</button>
+                </div>
+            </div>
+            <input type="hidden" id="duration" value="90">
+
+            <button type="submit" class="btn btn-search" id="submitBtn">Crear Ruta</button>
+        </form>
+
+        <div class="spinner" id="spinner"></div>
+        <div id="resultBox" class="result-box"></div>
+        <div id="errorBox"
+            style="display:none; color: #ff6b6b; margin-top: 20px; border: 1px solid red; padding: 10px; background: rgba(255,0,0,0.1);">
+        </div>
+    </div>
+
+    <div class="footer">
+        <i class="fa-solid fa-wand-magic-sparkles"></i>
+        <span>Powered by: <span class="footer-brand">Hermanos Vidal</span></span>
+        <span style="opacity: 0.6; font-size: 0.75rem; margin-left: 10px;">v3.4</span>
+    </div>
+
+    <script type="module">
+        let routeData = [];
+        let userOrigin = "";
+
+        const form = document.getElementById('travelForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const spinner = document.getElementById('spinner');
+        const resultBox = document.getElementById('resultBox');
+        const errorBox = document.getElementById('errorBox');
+        const durationBtns = document.querySelectorAll('.duration-btn');
+        const durationInput = document.getElementById('duration');
+        const dayToggle = document.getElementById('dayToggle');
+        const dayCountContainer = document.getElementById('dayCountContainer');
+        const daysCountInput = document.getElementById('daysCount');
+        const dayBtns = document.querySelectorAll('.day-btn');
+
+        // --- UI LOGIC ---
+        dayToggle.addEventListener('change', () => {
+            if (dayToggle.checked) {
+                dayCountContainer.style.display = 'block';
+                if (daysCountInput.value === '1') {
+                    daysCountInput.value = '2';
+                    dayBtns.forEach(b => b.classList.remove('active'));
+                    document.querySelector('.day-btn[data-days="2"]').classList.add('active');
+                }
+            } else {
+                dayCountContainer.style.display = 'none';
+                daysCountInput.value = '1';
+            }
+        });
+
+        dayBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                dayBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                daysCountInput.value = btn.getAttribute('data-days');
+            });
+        });
+
+        durationBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                durationBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                durationInput.value = btn.getAttribute('data-time');
+            });
+        });
+
+        // --- LÓGICA PRINCIPAL (CONECTADA AL WORKER) ---
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            submitBtn.style.display = 'none';
+            spinner.style.display = 'block';
+            resultBox.style.display = 'none';
+            errorBox.style.display = 'none';
+            resultBox.innerHTML = '';
+
+            const location = document.getElementById('location').value;
+            const interest = document.getElementById('interest').value;
+            const exactLocation = document.getElementById('exactLocation').value;
+            const duration = document.getElementById('duration').value;
+            const isCircular = document.getElementById('routeTypeToggle').checked;
+            const daysCount = document.getElementById('daysCount').value;
+
+            userOrigin = exactLocation ? exactLocation : location;
+
+            // Construcción del Prompt
+            const prompt = `Eres un guía experto. Crea un itinerario de ${daysCount} día(s) en ${location}.
+            Intereses: "${interest}".
+            Duración por día: ${duration} minutos.
+            Inicio obligatorio cada día: "${userOrigin}".
+            Tipo de ruta: ${isCircular ? "CIRCULAR (acaba donde empieza)" : "LINEAL (ve de punto A a punto B)"}.
+            
+            IMPORTANTE: Devuelve SOLO un JSON válido con esta estructura:
+            {
+                "dias": [
+                    {
+                        "dia": 1,
+                        "titulo": "Nombre de la zona",
+                        "historia": "Breve descripción con emojis",
+                        "paradas": ["${userOrigin}", "Lugar 1", "Fin"]
+                    }
+                ]
+            }`;
+
+            try {
+                // LLAMADA AL WORKER LOCAL (_worker.js)
+                const response = await fetch("/api/route", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ prompt: prompt })
+                });
+
+                if (!response.ok) {
+                    throw new Error("Error al obtener la ruta desde el servidor.");
+                }
+
+                const data = await response.json();
+
+                // Extraer el JSON de la respuesta de Cerebras
+                const contentStr = data.choices[0].message.content;
+                const content = JSON.parse(contentStr);
+
+                routeData = content.dias || [];
+
+                if (!routeData || routeData.length === 0) {
+                    throw new Error("La IA no devolvió ninguna ruta válida.");
+                }
+
+                // Renderizar Resultados
+                let htmlContent = "";
+                routeData.forEach((day, index) => {
+                    const paradasStr = day.paradas ? day.paradas.join(" ➝ ") : "Ruta sugerida";
+
+                    htmlContent += `
+                        <div style="margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px;">
+                            <h2 style="color: #FF512F;">📅 Día ${day.dia}: ${day.titulo}</h2>
+                            <p>${day.historia}</p>
+                            <p style="font-size:0.8rem; opacity:0.7; margin-top:5px;"><i class="fa-solid fa-route"></i> ${paradasStr}</p>
+                            <button class="btn btn-search" style="margin-top:10px; background: #4CAF50;" onclick="window.openGoogleMaps(${index})">
+                                <i class="fa-solid fa-map-location-dot"></i> Ver Ruta en Google Maps
+                            </button>
+                        </div>
+                    `;
+                });
+
+                resultBox.innerHTML = htmlContent;
+                resultBox.style.display = 'block';
+
+            } catch (error) {
+                console.error(error);
+                errorBox.innerText = `⚠️ Error: ${error.message}`;
+                errorBox.style.display = 'block';
+            } finally {
+                spinner.style.display = 'none';
+                submitBtn.style.display = 'block';
+            }
+        });
+
+        // --- FUNCIÓN DE MAPAS ---
+        window.openGoogleMaps = function (dayIndex) {
+            const dayRoute = routeData[dayIndex];
+            if (!dayRoute || !dayRoute.paradas) return alert("Error al cargar la ruta.");
+
+            let paradas = [...dayRoute.paradas];
+            const isCircular = document.getElementById('routeTypeToggle').checked;
+
+            const originEncoded = encodeURIComponent(userOrigin);
+            let destinationEncoded = "";
+            let waypointsEncoded = "";
+
+            if (isCircular) {
+                destinationEncoded = originEncoded;
+                waypointsEncoded = paradas.map(p => encodeURIComponent(p)).join('|');
+            } else {
+                const lastStop = paradas.pop();
+                destinationEncoded = encodeURIComponent(lastStop);
+                waypointsEncoded = paradas.map(p => encodeURIComponent(p)).join('|');
+            }
+
+            const url = `https://www.google.com/maps/dir/?api=1&origin=${originEncoded}&destination=${destinationEncoded}&waypoints=${waypointsEncoded}&travelmode=walking`;
+            window.open(url, '_blank');
+        }
+    </script>
+</body>
+
+</html>
