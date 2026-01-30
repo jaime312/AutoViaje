@@ -89,18 +89,53 @@
         }
 
         .logo {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 700;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
+            color: #ffffff;
+            letter-spacing: 0.5px;
+            text-decoration: none;
         }
 
-        .logo i {
-            background: var(--accent-gradient);
-            background-clip: text;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .logo-circle {
+            width: 52px;
+            height: 52px;
+            background: #ffffff;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            /* This masks the square image */
+            position: relative;
+        }
+
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            filter: brightness(1.1);
+            display: block;
+            transform: translateX(3px);
+            /* Move 5px to the right */
+        }
+
+        .logo:hover .logo-circle {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 6px 20px rgba(108, 99, 255, 0.2);
+        }
+
+        .logo-text {
+            color: #ffffff;
         }
 
         .nav-links {
@@ -649,7 +684,10 @@
     <nav class="navbar">
         <div class="container nav-content">
             <div class="logo">
-                <i class="fa-solid fa-wand-magic-sparkles"></i> RutIA
+                <div class="logo-circle">
+                    <img src="img/logo_naranja.png" alt="RutIA Logo" class="logo-img">
+                </div>
+                <span class="logo-text">RutIA</span>
             </div>
         </div>
     </nav>
@@ -926,7 +964,7 @@
             </div>
             <div class="footer-bottom">
                 &copy; 2026 RutIA. Powered By Hermanos Vidal.
-                v6.1
+                v6.2
                 <div style="font-size: 0.6rem; opacity: 0.3; margin-top: 10px;">
                     * Las rutas han sido creadas por IA y pueden contener errores. Evalúe siempre su ruta con otras
                     fuentes de información.
