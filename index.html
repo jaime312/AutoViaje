@@ -675,6 +675,32 @@
                 margin: 0 auto 20px auto;
             }
         }
+
+        .daily-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 12px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border: 1px solid var(--border);
+        }
+
+        .daily-label {
+            font-weight: 600;
+            color: #FF512F;
+            white-space: nowrap;
+            min-width: 50px;
+        }
+
+        /* Adjust input within rows */
+        .daily-row input[type="text"] {
+            margin-bottom: 0;
+            height: 42px;
+            /* Match toggle height approx */
+        }
     </style>
 </head>
 
@@ -964,7 +990,7 @@
             </div>
             <div class="footer-bottom">
                 &copy; 2026 RutIA. Powered By Hermanos Vidal.
-                v6.2
+                v6.3
                 <div style="font-size: 0.6rem; opacity: 0.3; margin-top: 10px;">
                     * Las rutas han sido creadas por IA y pueden contener errores. Evalúe siempre su ruta con otras
                     fuentes de información.
@@ -1041,32 +1067,30 @@
         // --- UI LOGIC ---
         function renderDailySettings(count) {
             dailySettings.innerHTML = '';
+
             if (count > 1) {
                 document.getElementById('exactLocation').style.display = 'none'; // Hide global input
+                globalRouteToggle.style.display = 'none'; // Hide global toggle
                 dailySettings.style.display = 'block';
 
                 for (let i = 1; i <= count; i++) {
                     const div = document.createElement('div');
-                    div.style.marginBottom = '10px';
-                    div.style.display = 'flex';
-                    div.style.alignItems = 'center';
-                    div.style.justifyContent = 'space-between';
-                    div.style.gap = '10px';
+                    div.className = 'daily-row';
 
                     div.innerHTML = `
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <span style="color:white; font-weight:600; white-space: nowrap; font-size: 0.9rem;">Día ${i}</span>
-                            <div style="position: relative; width: 130px;">
-                                <input type="checkbox" id="routeToggleDay${i}" class="toggle-checkbox daily-toggle">
-                                <label for="routeToggleDay${i}" class="toggle-label" style="width:100%; margin:0; height: 30px;">
-                                    <span class="toggle-text-left" style="font-size: 0.65rem; line-height: 30px;">Lineal</span>
-                                    <span class="toggle-btn" style="width:50%;"></span>
-                                    <span class="toggle-text-right" style="font-size: 0.65rem; line-height: 30px;">Circular</span>
-                                </label>
-                            </div>
+                        <div class="daily-label">Día ${i}</div>
+                        
+                        <div style="position: relative; width: 140px; height: 40px; flex-shrink: 0;">
+                            <input type="checkbox" id="routeToggleDay${i}" class="toggle-checkbox daily-toggle">
+                            <label for="routeToggleDay${i}" class="toggle-label" style="height: 40px; width: 100%;">
+                                <span class="toggle-text-left" style="font-size: 0.7rem;">Lineal</span>
+                                <span class="toggle-btn" style="height: 32px; top: 3px;"></span>
+                                <span class="toggle-text-right" style="font-size: 0.7rem;">Circular</span>
+                            </label>
                         </div>
-                        <input type="text" id="originDay${i}" placeholder="Salida desde..." 
-                            style="flex: 1; min-width: 0; padding: 0 10px; height: 30px; margin: 0; font-size: 0.85rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255, 255, 255, 0.05); color: white;">
+
+                        <input type="text" id="originDay${i}" placeholder="Salida (opcional)..." 
+                            style="flex-grow: 1; min-width: 0;">
                     `;
                     dailySettings.appendChild(div);
                 }
