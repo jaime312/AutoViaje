@@ -884,7 +884,7 @@
                 <div class="faq-item">
                     <div class="faq-question">¿Puedo guardar las rutas? <i class="fa-solid fa-chevron-down"></i></div>
                     <div class="faq-answer">Actualmente puedes abrir la ruta directamente en Google Maps y guardarla
-                        allí. Estamos trabajando en perfiles de usuario para la v6.</div>
+                        allí. Estamos trabajando en perfiles de usuario para versiones posteriores.</div>
                 </div>
             </div>
         </div>
@@ -926,7 +926,7 @@
             </div>
             <div class="footer-bottom">
                 &copy; 2026 RutIA. Powered By Hermanos Vidal.
-                v5.9
+                v6.0
                 <div style="font-size: 0.6rem; opacity: 0.3; margin-top: 10px;">
                     * Las rutas han sido creadas por IA y pueden contener errores. Evalúe siempre su ruta con otras
                     fuentes de información.
@@ -1028,7 +1028,7 @@
                             </div>
                         </div>
                         <input type="text" id="originDay${i}" placeholder="Salida desde..." 
-                            style="flex: 1; min-width: 0; padding: 6px 10px; font-size: 0.85rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255, 255, 255, 0.05); color: white;">
+                            style="flex: 1; min-width: 0; padding: 0 10px; height: 30px; margin: 0; font-size: 0.85rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255, 255, 255, 0.05); color: white;">
                     `;
                     dailySettings.appendChild(div);
                 }
@@ -1115,31 +1115,36 @@
             let exampleParadas = `["${userOrigin}", "Punto A", "Punto B", "..."]`;
 
             const prompt = `
-            ACTÚA COMO: Un guía local experto.
+            ACTÚA COMO: Un guía local experto, storyteller premiado y el amigo más 'cool' que conoce todos los secretos de la ciudad.
             
-            OBJETIVO: Crear la ruta turística PERFECTA de ${daysCount} día(s) en ${location}.
+            OBJETIVO: Crear la ruta turística PERFECTA y MÁS EMOCIONANTE de ${daysCount} día(s) en ${location}.
             
             DATOS DEL VIAJERO:
-            - Intereses: "${interest}"
-            - Duración Caminando: ${duration} minutos/día.
             - Intereses: "${interest}"
             - Duración Caminando: ${duration} minutos/día.
             - CONFIGURACIÓN DE RUTA (Respetar estrictamente por día, incluyendo punto de salida):
             ${routeTypesDesc}
             
-            REGLAS:
-            1. Lógica Geográfica Real.
-            2. Valor Añadido (no sitios rellenos).
+            REGLAS DE ORO:
+            1. Lógica Geográfica Real (optimiza el camino).
+            2. Valor Añadido (no sitios de relleno, solo lo mejor).
             3. Completitud (ajustar sitios al tiempo).
-            4. MAPAS EXACTOS: En el array de "paradas", es OBLIGATORIO añadir ", ${location}" al final de cada nombre de sitio para evitar errores de búsqueda en Google Maps (Ej: "Museo del Prado, ${location}").
+            4. MAPAS EXACTOS: En el array de "paradas", es OBLIGATORIO añadir ", ${location}" al final de cada nombre de sitio (Ej: "Museo del Prado, ${location}").
+            
+            SOBRE LA "HISTORIA" (IMPORTANTE):
+            - NO hagas una lista aburrida.
+            - Quiero una NARRATIVA INMERSIVA y EMOCIONANTE.
+            - Cuenta CURIOSIDADES, LEYENDAS URBANAS, o secretos que solo los locales saben.
+            - Usa un tono cercano, entusiasta y divertido. ¡Véndele la experiencia!
+            - EXTENSIÓN: Mínimo 150 palabras por día. Haz que el usuario se muera de ganas por ir.
 
             ESTRUCTURA DE RESPUESTA (JSON PURO):
             {
                 "dias": [
                     {
                         "dia": 1,
-                        "titulo": "Título...",
-                        "historia": "Historia detallada y atractiva...",
+                        "titulo": "Título Gancho",
+                        "historia": "Aquí va la narrativa apasionante, detallada y 'guay' que conecta los puntos de la ruta...",
                         "paradas": ${exampleParadas}
                     }
                 ]
