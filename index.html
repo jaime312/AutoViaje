@@ -12,14 +12,14 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <script data-noptimize="1" data-cfasync="false" data-wpfc-render="false">
-  (function () {
-      var script = document.createElement("script");
-      script.async = 1;
-      script.src = 'https://emrldtp.com/NDk2NzY5.js?t=496769';
-      document.head.appendChild(script);
-  })();
-</script>
-    
+        (function () {
+            var script = document.createElement("script");
+            script.async = 1;
+            script.type = "module";
+            script.src = "https://tpembd.com/wl_web/main.js?wl_id=5488";
+            document.head.appendChild(script);
+        })();
+    </script>
     <style>
         * {
             box-sizing: border-box;
@@ -123,7 +123,6 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             overflow: hidden;
-            /* This masks the square image */
             position: relative;
         }
 
@@ -134,7 +133,6 @@
             filter: brightness(1.1);
             display: block;
             transform: translateX(3px);
-            /* Move 5px to the right */
         }
 
         .logo:hover .logo-circle {
@@ -177,6 +175,7 @@
             background: radial-gradient(circle at 10% 20%, rgba(255, 81, 47, 0.1) 0%, transparent 20%),
                 radial-gradient(circle at 90% 80%, rgba(221, 36, 118, 0.1) 0%, transparent 20%);
             padding-top: 60px;
+            padding-bottom: 40px;
         }
 
         .hero-grid {
@@ -241,7 +240,102 @@
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
         }
 
-        /* --- FORM ELEMENTS (Existing styles adapted) --- */
+        /* --- BOOKING SECTION (NUEVO) --- */
+        .booking-section {
+            background: rgba(20, 30, 48, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--border);
+            color: white;
+            border-radius: 24px;
+            padding: 40px 40px 20px 40px;
+            margin-top: -40px;
+            /* Efecto solapado */
+            position: relative;
+            z-index: 10;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 1000px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* OVERRIDES FOR TRAVEL PAYOUTS WIDGET */
+        #tpwl-search input,
+        #tpwl-search select,
+        #tpwl-search .s__input,
+        #tpwl-search .search_form .start_input,
+        #tpwl-search .search_form .finish_input,
+        #tpwl-search .search_form .trip_class_select,
+        #tpwl-search .search_form .passengers_select {
+            background: rgba(255, 255, 255, 0.05) !important;
+            color: white !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+            border-radius: 12px !important;
+            padding: 12px !important;
+            font-family: inherit !important;
+        }
+
+        #tpwl-search input::placeholder {
+            color: rgba(255, 255, 255, 0.6) !important;
+        }
+
+        #tpwl-search button[type="submit"],
+        #tpwl-search .s__submit,
+        #tpwl-search .search_form .search_button {
+            background: var(--accent-gradient) !important;
+            color: white !important;
+            font-weight: 600 !important;
+            border-radius: 12px !important;
+            box-shadow: 0 4px 15px rgba(221, 36, 118, 0.4) !important;
+            border: none !important;
+            transition: transform 0.2s !important;
+            text-transform: uppercase !important;
+            letter-spacing: 1px !important;
+            cursor: pointer !important;
+        }
+
+        #tpwl-search button[type="submit"]:hover,
+        #tpwl-search .s__submit:hover,
+        #tpwl-search .search_form .search_button:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 25px rgba(221, 36, 118, 0.6) !important;
+        }
+
+        #tpwl-search label,
+        #tpwl-search .s__label,
+        #tpwl-search .label_text {
+            color: white !important;
+            font-weight: 500 !important;
+        }
+
+        /* Widget container tweaks */
+        .tpwl-widget {
+            font-family: 'Poppins', sans-serif !important;
+        }
+
+        /* Mobile Adjustments for Widget */
+        @media (max-width: 500px) {
+            .booking-section {
+                padding: 30px 20px;
+                margin-top: 0;
+                width: 95%;
+            }
+
+            #tpwl-search input,
+            #tpwl-search select,
+            #tpwl-search button {
+                width: 100% !important;
+                margin-bottom: 1px !important;
+            }
+        }
+
+        /* Fixes for Widget containers */
+        #tpwl-tickets {
+            min-height: 0;
+            margin-top: 10px;
+        }
+
+        /* --- FORM ELEMENTS --- */
         h1.form-title {
             margin-top: 0;
             font-weight: 600;
@@ -618,13 +712,10 @@
         }
 
         /* RESPONSIVE */
-        /* RESPONSIVE */
         @media (max-width: 900px) {
             .navbar {
                 position: relative;
-                /* Prevent overlap issues on mobile */
                 background: var(--bg-dark);
-                /* Solid background for readability */
             }
 
             .nav-content {
@@ -635,31 +726,32 @@
             .hero {
                 padding-top: 20px;
                 align-items: center;
-                /* Center vertically on mobile if content fits, or top if long */
             }
 
             .hero-grid {
                 grid-template-columns: 1fr;
                 text-align: center;
                 width: 100%;
-                /* Ensure full width */
                 margin: 0 auto;
                 padding: 0 10px;
-                /* Safety padding */
             }
 
             .card {
                 padding: 20px;
-                /* Reduced padding */
             }
 
             .hero-text h1 {
                 font-size: 2.2rem;
-                /* Smaller title */
             }
 
             .hero-text p {
                 margin: 0 auto 30px auto;
+            }
+
+            /* Ajuste Booking Móvil */
+            .booking-section {
+                padding: 20px;
+                margin-top: 20px;
             }
 
             .features-grid,
@@ -669,7 +761,6 @@
                 grid-template-columns: 1fr;
                 gap: 30px;
                 text-align: center;
-                /* Force center alignment */
             }
 
             .footer-brand,
@@ -705,18 +796,92 @@
             min-width: 50px;
         }
 
-        /* Adjust input within rows */
         .daily-row input[type="text"] {
             margin-bottom: 0;
             height: 42px;
-            /* Match toggle height approx */
+        }
+
+        /* --- NUEVO ESTILO: TIMELINE DE RUTA --- */
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+            margin-left: 20px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 25px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            background: var(--accent-gradient);
+            border-radius: 50%;
+            border: 2px solid white;
+            box-shadow: 0 0 10px rgba(255, 81, 47, 0.5);
+        }
+
+        .timeline-content {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 5px;
+        }
+
+        /* --- TARJETAS DE RESERVA INTELIGENTE --- */
+        .smart-booking-card {
+            background: linear-gradient(135deg, #1e3c72, #2a5298);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: fadeIn 0.5s ease;
+        }
+
+        .btn-hotel {
+            background: #fff;
+            color: #1e3c72;
+            font-weight: 800;
+            padding: 12px 25px;
+            border-radius: 50px;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 10px;
+            transition: transform 0.2s;
+        }
+
+        .btn-hotel:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
         }
     </style>
 </head>
 
 <body>
 
-    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="container nav-content">
             <div class="logo">
@@ -728,7 +893,6 @@
         </div>
     </nav>
 
-    <!-- HERO SECTION -->
     <section class="hero" id="how">
         <div class="container hero-grid">
             <div class="hero-text">
@@ -743,7 +907,6 @@
                 </div>
             </div>
 
-            <!-- EMBEDDED APPLICATION CARD -->
             <div class="app-card-wrapper">
                 <div class="glow-effect"></div>
                 <div class="card">
@@ -795,7 +958,6 @@
                         </div>
 
                         <div id="dailySettings" style="display: none; margin-bottom: 20px;">
-                            <!-- Generated by JS -->
                         </div>
 
                         <textarea id="interest"
@@ -826,7 +988,21 @@
         </div>
     </section>
 
-    <!-- STATS SECTION -->
+    <section class="container" style="position: relative; z-index: 20; padding-bottom: 40px;">
+        <div class="booking-section">
+            <div style="text-align: center; margin-bottom: 30px;">
+                <h2 style="color: white; margin: 0 0 10px 0; font-size: 2rem; font-weight: 700;">✈️ Reserva tu
+                    Aventura</h2>
+                <p style="color: var(--text-secondary); font-size: 1.1rem; margin: 0;">Encuentra los mejores vuelos y
+                    hoteles para tu
+                    ruta.</p>
+            </div>
+
+            <div id="tpwl-search"></div>
+
+            <div id="tpwl-tickets"></div>
+        </div>
+    </section>
     <section class="section">
         <div class="container">
             <div class="stats-grid">
@@ -850,7 +1026,6 @@
         </div>
     </section>
 
-    <!-- FEATURES SECTION -->
     <section class="section features" id="features">
         <div class="container">
             <h2 class="section-title">Por qué usar RutIA</h2>
@@ -897,7 +1072,6 @@
         </div>
     </section>
 
-    <!-- TESTIMONIALS -->
     <section class="section" id="testimonials">
         <div class="container">
             <h2 class="section-title">Lo que dicen los viajeros</h2>
@@ -938,7 +1112,6 @@
         </div>
     </section>
 
-    <!-- FAQ SECTION -->
     <section class="section features" id="faq">
         <div class="container">
             <h2 class="section-title">Preguntas Frecuentes</h2>
@@ -964,7 +1137,6 @@
         </div>
     </section>
 
-    <!-- FOOTER -->
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
@@ -999,8 +1171,8 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                &copy; 2026 RutIA. Powered By Hermanos Vidal.
-                v6.3
+                © 2026 RutIA. Powered By Hermanos Vidal.
+                v7.1
                 <div style="font-size: 0.6rem; opacity: 0.3; margin-top: 10px;">
                     * Las rutas han sido creadas por IA y pueden contener errores. Evalúe siempre su ruta con otras
                     fuentes de información.
@@ -1009,7 +1181,6 @@
         </div>
     </footer>
 
-    <!-- SCRIPT -->
     <script type="module">
         let routeData = [];
         let userOrigin = "";
@@ -1250,8 +1421,14 @@
 
                 // Renderizar Resultados
                 let htmlContent = "";
+
+                // TU MARCADOR REAL
+                const affiliateID = "702375";
+
                 routeData.forEach((day, index) => {
                     let displayParadas = [...(day.paradas || [])];
+
+                    // Limpieza del punto de origen si es necesario
                     if (displayParadas.length > 0 && userOrigin) {
                         const firstStop = displayParadas[0].toLowerCase().trim();
                         const originClean = userOrigin.toLowerCase().trim();
@@ -1259,15 +1436,48 @@
                             displayParadas.shift();
                         }
                     }
-                    const paradasStr = displayParadas.length > 0 ? displayParadas.join(" ➝ ") : "Ruta sugerida";
+
+                    // 1. Crear HTML del Timeline (Visualmente bonito)
+                    let timelineHTML = '<div class="timeline">';
+                    displayParadas.forEach(parada => {
+                        // Limpiamos el nombre de la ciudad para que quede limpio en el texto
+                        let nombreLugar = parada.replace(`, ${location}`, '');
+                        timelineHTML += `
+                            <div class="timeline-item">
+                                <div class="timeline-dot"></div>
+                                <div class="timeline-content">
+                                    <div class="timeline-title">${nombreLugar}</div>
+                                </div>
+                            </div>
+                        `;
+                    });
+                    timelineHTML += '</div>';
+
+                    // 2. Enlaces de Afiliado "Inteligentes" (Deep Links)
+                    // Hotellook busca hoteles directos en la ciudad
+                    const hotelLink = `https://search.hotellook.com/hotels?destination=${encodeURIComponent(location)}&marker=${affiliateID}&language=es`;
+                    // Viator/GetYourGuide para tours (ejemplo genérico a travelpayouts)
+                    const activityLink = `https://tp.media/click?shmarker=${affiliateID}&promo_id=2087&source_type=link&type=click&trs=27221`;
 
                     htmlContent += `
-                        <div style="margin-bottom: 30px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px;">
-                            <h2 style="color: #FF512F;">📅 Día ${day.dia}: ${day.titulo}</h2>
-                            <p>${day.historia}</p>
-                            <p style="font-size:0.8rem; opacity:0.7; margin-top:5px;"><i class="fa-solid fa-route"></i> ${paradasStr}</p>
-                            <button class="btn btn-search" style="margin-top:10px; background: #4CAF50;" onclick="window.openGoogleMaps(${index})">
-                                <i class="fa-solid fa-map-location-dot"></i> Ver Ruta en Google Maps
+                        <div style="margin-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px;">
+                            <h2 style="color: #FF512F; font-size: 1.8rem;">📅 Día ${day.dia}: ${day.titulo}</h2>
+                            
+                            <p style="font-size: 1.1rem; color: #ddd; margin-bottom: 20px;">${day.historia.replace(/\n/g, '<br>')}</p>
+                            
+                            <div class="smart-booking-card">
+                                <h3 style="margin:0 0 10px 0; font-size: 1.2rem;">🏨 ¿Aún no tienes hotel en ${location}?</h3>
+                                <p style="font-size: 0.9rem; margin-bottom:15px; opacity: 0.8;">Consigue precios secretos con descuento para esta ruta.</p>
+                                <a href="${hotelLink}" target="_blank" class="btn-hotel">
+                                    <i class="fa-solid fa-bed"></i> Ver Hoteles en ${location}
+                                </a>
+                            </div>
+
+                            <h3 style="margin-top: 30px;">📍 Tu itinerario paso a paso:</h3>
+                            ${timelineHTML}
+
+                            <button class="btn btn-search" style="margin-top:20px; background: #4CAF50; font-size: 1.1rem;" onclick="window.openGoogleMaps(${index})">
+                                <i class="fa-solid fa-map-location-dot"></i> Navegar con Google Maps
                             </button>
                         </div>
                     `;
@@ -1275,6 +1485,9 @@
 
                 resultBox.innerHTML = htmlContent;
                 resultBox.style.display = 'block';
+
+                // Scroll suave hacia los resultados
+                resultBox.scrollIntoView({ behavior: 'smooth' });
 
             } catch (error) {
                 console.error(error);
@@ -1296,18 +1509,13 @@
 
             let isCircular = false;
             if (daysCount > 1) {
-                // Determine setting for this specific day
-                // dayIndex is 0-based, day settings are 1-based IDs
                 const toggle = document.getElementById(`routeToggleDay${dayIndex + 1}`);
                 if (toggle) isCircular = toggle.checked;
 
                 const originInput = document.getElementById(`originDay${dayIndex + 1}`);
                 if (originInput && originInput.value.trim() !== "") {
-                    // Use per-day origin if available
                     userOrigin = originInput.value;
                 } else {
-                    // Fallback to location name if empty, or keep global userOrigin if appropriate?
-                    // If input is showing but empty, user might mean "center of city"
                     userOrigin = document.getElementById('location').value;
                 }
             } else {
@@ -1335,11 +1543,11 @@
                 waypointsEncoded = paradas.map(p => encodeURIComponent(p)).join('|');
             }
 
+            // CORRECCIÓN URL MAPS: Añadido formato correcto
             const url = `https://www.google.com/maps/dir/?api=1&origin=${originEncoded}&destination=${destinationEncoded}&waypoints=${waypointsEncoded}&travelmode=walking`;
             window.open(url, '_blank');
         }
     </script>
 </body>
-
 
 </html>
