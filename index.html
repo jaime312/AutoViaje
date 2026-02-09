@@ -927,66 +927,6 @@
             opacity: 0.7;
         }
 
-        /* Pack de Supervivencia - Estilo High-Tech */
-        .survival-pack {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 25px;
-            margin: 30px 0;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .survival-pack::before {
-            content: 'TOP RATED';
-            position: absolute;
-            top: 10px;
-            right: -30px;
-            background: var(--accent-gradient);
-            font-size: 0.6rem;
-            padding: 5px 40px;
-            transform: rotate(45deg);
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        .survival-pack h4 {
-            margin: 0 0 15px 0;
-            font-size: 1.1rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .pack-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .pack-item {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: 12px;
-            text-decoration: none;
-            color: white;
-            font-size: 0.8rem;
-            transition: all 0.2s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 8px;
-        }
-
-        .pack-item:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--primary);
-            transform: scale(1.02);
-        }
-
         /* Tarjeta de Conversión Final (Hotel en Mapa) */
         .final-conversion {
             background: linear-gradient(180deg, rgba(20, 30, 48, 0) 0%, rgba(108, 99, 255, 0.1) 100%);
@@ -1300,7 +1240,7 @@
             </div>
             <div class="footer-bottom">
                 © 2026 RutIA. Powered By Hermanos Vidal.
-                v7.3
+                v7.4
                 <div style="font-size: 0.6rem; opacity: 0.3; margin-top: 10px;">
                     * Las rutas han sido creadas por IA y pueden contener errores. Evalúe siempre su ruta con otras
                     fuentes de información.
@@ -1630,27 +1570,6 @@
                     });
                     timelineHTML += '</div>';
 
-                    // 2. Pack de Supervivencia (Amazon Affiliates Mock)
-                    // Se inserta solo en el primer día (index === 0)
-                    let survivalHTML = '';
-                    if (index === 0) {
-                        survivalHTML = `
-                            <div class="survival-pack">
-                                <h4><i class="fa-solid fa-kit-medical"></i> Kit de Supervivencia RutIA</h4>
-                                <p style="font-size: 0.9rem; opacity: 0.8;">Para disfrutar esta ruta sin imprevistos:</p>
-                                <div class="pack-grid">
-                                    <a href="TU_LINK_AFILIADO_AMAZON_POWERBANK" target="_blank" class="pack-item">
-                                        <i class="fa-solid fa-battery-three-quarters" style="font-size: 1.2rem; color: #38ef7d;"></i>
-                                        <span>Powerbank Ultra-Slim</span>
-                                    </a>
-                                    <a href="TU_LINK_AFILIADO_AMAZON_ZAPATOS" target="_blank" class="pack-item">
-                                        <i class="fa-solid fa-person-walking" style="font-size: 1.2rem; color: #FF512F;"></i>
-                                        <span>Plantillas Ergonómicas</span>
-                                    </a>
-                                </div>
-                            </div>
-                        `;
-                    }
 
                     // 3. Hotel Map Widget (Script Injection)
                     // Preparamos el contenedor, el script se inyectará después
@@ -1684,19 +1603,8 @@
                             <h3 style="margin-top: 30px;">📍 Tu itinerario paso a paso:</h3>
                             ${timelineHTML}
 
-                            <button class="btn" style="
-                                background: #ffffff; 
-                                color: #000; 
-                                margin-top:25px; 
-                                border-radius: 50px; 
-                                display: flex; 
-                                align-items: center; 
-                                justify-content: center; 
-                                gap: 10px;
-                                box-shadow: 0 10px 20px rgba(255,255,255,0.1);" 
-                                onclick="window.openGoogleMaps(${index})">
-                                <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/Google_Maps_icon_%282020%29.svg" width="20">
-                                Iniciar Navegación GPS VIP
+                            <button class="btn btn-search" style="margin-top:20px; background: var(--accent-gradient); font-size: 1.1rem; width: 100%; border: none; color: white; display: flex; align-items: center; justify-content: center; gap: 10px;" onclick="window.openGoogleMaps(${index})">
+                                <i class="fa-solid fa-map-location-dot"></i> Crear ruta en Google Maps
                             </button>
 
                             ${mapContainerHTML}
