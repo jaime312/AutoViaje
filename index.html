@@ -877,6 +877,134 @@
             transform: scale(1.05);
             box-shadow: 0 5px 15px rgba(255, 255, 255, 0.3);
         }
+
+        /* --- COMPONENTES PREMIUM --- */
+
+        /* Contenedor de "Evitar Colas" - Estilo Dorado/VIP */
+        .btn-skip-queue {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.2));
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            color: #ffd700 !important;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            margin-top: 10px;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.1);
+        }
+
+        .btn-skip-queue:hover {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.2), rgba(255, 165, 0, 0.3));
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 215, 0, 0.2);
+            border-color: rgba(255, 215, 0, 0.5);
+        }
+
+        /* Sugerencia IA (Micro-momentos) */
+        .ai-suggestion {
+            margin-top: 15px;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.03);
+            border-left: 2px solid #38ef7d;
+            border-radius: 0 12px 12px 0;
+            font-size: 0.85rem;
+        }
+
+        .ai-suggestion b {
+            color: #38ef7d;
+        }
+
+        .ai-suggestion a {
+            color: #fff;
+            text-decoration: underline;
+            margin-left: 10px;
+            opacity: 0.7;
+        }
+
+        /* Pack de Supervivencia - Estilo High-Tech */
+        .survival-pack {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 25px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .survival-pack::before {
+            content: 'TOP RATED';
+            position: absolute;
+            top: 10px;
+            right: -30px;
+            background: var(--accent-gradient);
+            font-size: 0.6rem;
+            padding: 5px 40px;
+            transform: rotate(45deg);
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .survival-pack h4 {
+            margin: 0 0 15px 0;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pack-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .pack-item {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: white;
+            font-size: 0.8rem;
+            transition: all 0.2s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 8px;
+        }
+
+        .pack-item:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: var(--primary);
+            transform: scale(1.02);
+        }
+
+        /* Tarjeta de Conversión Final (Hotel en Mapa) */
+        .final-conversion {
+            background: linear-gradient(180deg, rgba(20, 30, 48, 0) 0%, rgba(108, 99, 255, 0.1) 100%);
+            border-radius: 24px;
+            padding: 30px;
+            text-align: center;
+            border: 1px solid rgba(108, 99, 255, 0.2);
+            margin-top: 50px;
+        }
+
+        .final-conversion h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
     </style>
 </head>
 
@@ -1172,7 +1300,7 @@
             </div>
             <div class="footer-bottom">
                 © 2026 RutIA. Powered By Hermanos Vidal.
-                v7.2
+                v7.3
                 <div style="font-size: 0.6rem; opacity: 0.3; margin-top: 10px;">
                     * Las rutas han sido creadas por IA y pueden contener errores. Evalúe siempre su ruta con otras
                     fuentes de información.
@@ -1450,30 +1578,92 @@
                         }
                     }
 
-                    // 1. Crear HTML del Timeline (Visualmente bonito)
+                    // --- FUNCIÓN DE ENTRADAS (SKIP THE LINE) ---
+                    function getTicketLink(lugar, affiliateID) {
+                        const lugaresTop = {
+                            'prado': 'https://www.tiqets.com/es/madrid-museum-del-prado-tickets-l145158/',
+                            'sagrada': 'https://www.tiqets.com/es/barcelona-sagrada-familia-tickets-l145067/',
+                            'coliseo': 'https://www.tiqets.com/es/roma-coliseo-tickets-l145097/',
+                            'louvre': 'https://www.tiqets.com/es/paris-museo-del-louvre-tickets-l145031/',
+                            'vatican': 'https://www.tiqets.com/es/vatican-city-vatican-museums-tickets-l145164/'
+                        };
+
+                        const lugarLower = lugar.toLowerCase();
+                        for (let key in lugaresTop) {
+                            if (lugarLower.includes(key)) {
+                                return `<a href="${lugaresTop[key]}?partner=702375" target="_blank" class="btn-skip-queue">
+                                            <i class="fa-solid fa-bolt"></i> Evitar cola en este monumento
+                                        </a>`;
+                            }
+                        }
+                        return '';
+                    }
+
+                    // 1. Crear HTML del Timeline (Vitaminado)
                     let timelineHTML = '<div class="timeline">';
-                    displayParadas.forEach(parada => {
-                        // Limpiamos el nombre de la ciudad para que quede limpio en el texto
+                    displayParadas.forEach((parada, i) => {
+                        // Limpiamos el nombre
                         let nombreLugar = String(parada || "");
                         if (location) {
                             nombreLugar = nombreLugar.replace(', ' + location, '');
                         }
+
+                        // Botón entradas
+                        let ticketHTML = getTicketLink(nombreLugar, affiliateID);
+
+                        // Sugerencia IA (Solo en la 2ª parada - index 1)
+                        let aiSuggestionHTML = '';
+                        if (i === 1) {
+                            aiSuggestionHTML = `<div class="ai-suggestion"><b>💡 Tip de RutIA:</b> Cerca de aquí está el mejor rincón para fotos de ${location}.</div>`;
+                        }
+
                         timelineHTML += `
                             <div class="timeline-item">
                                 <div class="timeline-dot"></div>
                                 <div class="timeline-content">
                                     <div class="timeline-title">${nombreLugar}</div>
+                                    ${ticketHTML}
+                                    ${aiSuggestionHTML}
                                 </div>
                             </div>
                         `;
                     });
                     timelineHTML += '</div>';
 
-                    // 2. Enlaces de Afiliado "Inteligentes" (Deep Links)
-                    // Hotellook busca hoteles directos en la ciudad
+                    // 2. Pack de Supervivencia (Amazon Affiliates Mock)
+                    // Se inserta solo en el primer día (index === 0)
+                    let survivalHTML = '';
+                    if (index === 0) {
+                        survivalHTML = `
+                            <div class="survival-pack">
+                                <h4><i class="fa-solid fa-kit-medical"></i> Kit de Supervivencia RutIA</h4>
+                                <p style="font-size: 0.9rem; opacity: 0.8;">Para disfrutar esta ruta sin imprevistos:</p>
+                                <div class="pack-grid">
+                                    <a href="TU_LINK_AFILIADO_AMAZON_POWERBANK" target="_blank" class="pack-item">
+                                        <i class="fa-solid fa-battery-three-quarters" style="font-size: 1.2rem; color: #38ef7d;"></i>
+                                        <span>Powerbank Ultra-Slim</span>
+                                    </a>
+                                    <a href="TU_LINK_AFILIADO_AMAZON_ZAPATOS" target="_blank" class="pack-item">
+                                        <i class="fa-solid fa-person-walking" style="font-size: 1.2rem; color: #FF512F;"></i>
+                                        <span>Plantillas Ergonómicas</span>
+                                    </a>
+                                </div>
+                            </div>
+                        `;
+                    }
+
+                    // 3. Hotel Map Widget (Script Injection)
+                    // Preparamos el contenedor, el script se inyectará después
+                    const mapContainerHTML = `
+                        <div class="final-conversion">
+                            <h3>¿Dónde vas a descansar hoy?</h3>
+                            <p>He seleccionado estas opciones cerca de tu última parada:</p>
+                            <div id="tp-hotel-map-container-${index}"></div>
+                        </div>
+                    `;
+
+                    // Enlaces de Afiliado "Inteligentes" (Deep Links Generales)
                     const hotelLink = `https://search.hotellook.com/hotels?destination=${encodeURIComponent(location)}&marker=${affiliateID}&language=es`;
-                    // Viator/GetYourGuide para tours (ejemplo genérico a travelpayouts)
-                    const activityLink = `https://tp.media/click?shmarker=${affiliateID}&promo_id=2087&source_type=link&type=click&trs=27221`;
 
                     htmlContent += `
                         <div style="margin-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px;">
@@ -1481,6 +1671,8 @@
                             
                             <p style="font-size: 1.1rem; color: #ddd; margin-bottom: 20px;">${(day.historia || "").replace(/\n/g, '<br>')}</p>
                             
+                            ${survivalHTML}
+
                             <div class="smart-booking-card">
                                 <h3 style="margin:0 0 10px 0; font-size: 1.2rem;">🏨 ¿Aún no tienes hotel en ${location}?</h3>
                                 <p style="font-size: 0.9rem; margin-bottom:15px; opacity: 0.8;">Consigue precios secretos con descuento para esta ruta.</p>
@@ -1492,15 +1684,41 @@
                             <h3 style="margin-top: 30px;">📍 Tu itinerario paso a paso:</h3>
                             ${timelineHTML}
 
-                            <button class="btn btn-search" style="margin-top:20px; background: #4CAF50; font-size: 1.1rem;" onclick="window.openGoogleMaps(${index})">
-                                <i class="fa-solid fa-map-location-dot"></i> Navegar con Google Maps
+                            <button class="btn" style="
+                                background: #ffffff; 
+                                color: #000; 
+                                margin-top:25px; 
+                                border-radius: 50px; 
+                                display: flex; 
+                                align-items: center; 
+                                justify-content: center; 
+                                gap: 10px;
+                                box-shadow: 0 10px 20px rgba(255,255,255,0.1);" 
+                                onclick="window.openGoogleMaps(${index})">
+                                <img src="https://upload.wikimedia.org/wikipedia/commons/3/39/Google_Maps_icon_%282020%29.svg" width="20">
+                                Iniciar Navegación GPS VIP
                             </button>
+
+                            ${mapContainerHTML}
                         </div>
                     `;
                 });
 
                 resultBox.innerHTML = htmlContent;
                 resultBox.style.display = 'block';
+
+                // --- INYECCIÓN DE SCRIPTS (WIDGETS) ---
+                // Los scripts no se ejecutan con innerHTML, hay que recrearlos
+                routeData.forEach((day, index) => {
+                    const container = document.getElementById(`tp-hotel-map-container-${index}`);
+                    if (container) {
+                        const script = document.createElement('script');
+                        script.charset = "utf-8";
+                        script.src = `https://tp.media/content?promo_id=4153&shmarker=${affiliateID}&campaign_id=121&trs=27221&target_host=search.hotellook.com&locale=es&type=map&limit=5&powered_by=false&destination=${encodeURIComponent(location)}`;
+                        script.async = true;
+                        container.appendChild(script);
+                    }
+                });
 
                 // Scroll suave hacia los resultados
                 resultBox.scrollIntoView({ behavior: 'smooth' });
