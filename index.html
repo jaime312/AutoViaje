@@ -1240,7 +1240,7 @@
             </div>
             <div class="footer-bottom">
                 © 2026 RutIA. Powered By Hermanos Vidal.
-                v7.4
+                v7.5
                 <div style="font-size: 0.6rem; opacity: 0.3; margin-top: 10px;">
                     * Las rutas han sido creadas por IA y pueden contener errores. Evalúe siempre su ruta con otras
                     fuentes de información.
@@ -1506,6 +1506,27 @@
                 // TU MARCADOR REAL
                 const affiliateID = "702375";
 
+                // --- FUNCIÓN DE ENTRADAS (SKIP THE LINE) ---
+                function getTicketLink(lugar, affiliateID) {
+                    const lugaresTop = {
+                        'prado': 'https://www.tiqets.com/es/madrid-museum-del-prado-tickets-l145158/',
+                        'sagrada': 'https://www.tiqets.com/es/barcelona-sagrada-familia-tickets-l145067/',
+                        'coliseo': 'https://www.tiqets.com/es/roma-coliseo-tickets-l145097/',
+                        'louvre': 'https://www.tiqets.com/es/paris-museo-del-louvre-tickets-l145031/',
+                        'vatican': 'https://www.tiqets.com/es/vatican-city-vatican-museums-tickets-l145164/'
+                    };
+
+                    const lugarLower = lugar.toLowerCase();
+                    for (let key in lugaresTop) {
+                        if (lugarLower.includes(key)) {
+                            return `<a href="${lugaresTop[key]}?partner=${affiliateID}" target="_blank" class="btn-skip-queue">
+                                        <i class="fa-solid fa-bolt"></i> Evitar cola en este monumento
+                                    </a>`;
+                        }
+                    }
+                    return '';
+                }
+
                 routeData.forEach((day, index) => {
                     let displayParadas = [...(day.paradas || [])];
 
@@ -1516,27 +1537,6 @@
                         if (firstStop === originClean || firstStop.includes(originClean) || originClean.includes(firstStop)) {
                             displayParadas.shift();
                         }
-                    }
-
-                    // --- FUNCIÓN DE ENTRADAS (SKIP THE LINE) ---
-                    function getTicketLink(lugar, affiliateID) {
-                        const lugaresTop = {
-                            'prado': 'https://www.tiqets.com/es/madrid-museum-del-prado-tickets-l145158/',
-                            'sagrada': 'https://www.tiqets.com/es/barcelona-sagrada-familia-tickets-l145067/',
-                            'coliseo': 'https://www.tiqets.com/es/roma-coliseo-tickets-l145097/',
-                            'louvre': 'https://www.tiqets.com/es/paris-museo-del-louvre-tickets-l145031/',
-                            'vatican': 'https://www.tiqets.com/es/vatican-city-vatican-museums-tickets-l145164/'
-                        };
-
-                        const lugarLower = lugar.toLowerCase();
-                        for (let key in lugaresTop) {
-                            if (lugarLower.includes(key)) {
-                                return `<a href="${lugaresTop[key]}?partner=702375" target="_blank" class="btn-skip-queue">
-                                            <i class="fa-solid fa-bolt"></i> Evitar cola en este monumento
-                                        </a>`;
-                            }
-                        }
-                        return '';
                     }
 
                     // 1. Crear HTML del Timeline (Vitaminado)
