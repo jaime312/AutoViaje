@@ -1172,7 +1172,7 @@
             </div>
             <div class="footer-bottom">
                 © 2026 RutIA. Powered By Hermanos Vidal.
-                v7.1
+                v7.2
                 <div style="font-size: 0.6rem; opacity: 0.3; margin-top: 10px;">
                     * Las rutas han sido creadas por IA y pueden contener errores. Evalúe siempre su ruta con otras
                     fuentes de información.
@@ -1410,7 +1410,20 @@
                 const data = await response.json();
 
                 // Extraer el JSON de la respuesta de Cerebras
-                const contentStr = data.choices[0].message.content;
+                let contentStr = data.choices[0].message.content;
+
+                // Limpieza de Markdown si la IA lo incluye
+                contentStr = contentStr.replace(/```json/g, "").replace(/```/g, "").trim();
+
+                // Buscar el inicio y fin del objeto JSON para mayor seguridad
+                const jsonStart = contentStr.indexOf('{');
+                const jsonEnd = contentStr.lastIndexOf('}');
+
+                if (jsonStart !== -1 && jsonEnd !== -1) {
+                    contentStr = contentStr.substring(jsonStart, jsonEnd + 1);
+                }
+
+                console.log("JSON Limpio:", contentStr); // Para depuración
                 const content = JSON.parse(contentStr);
 
                 routeData = content.dias || [];
@@ -1441,7 +1454,10 @@
                     let timelineHTML = '<div class="timeline">';
                     displayParadas.forEach(parada => {
                         // Limpiamos el nombre de la ciudad para que quede limpio en el texto
-                        let nombreLugar = parada.replace(`, ${location}`, '');
+                        let nombreLugar = String(parada || "");
+                        if (location) {
+                            nombreLugar = nombreLugar.replace(', ' + location, '');
+                        }
                         timelineHTML += `
                             <div class="timeline-item">
                                 <div class="timeline-dot"></div>
@@ -1463,7 +1479,7 @@
                         <div style="margin-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 30px;">
                             <h2 style="color: #FF512F; font-size: 1.8rem;">📅 Día ${day.dia}: ${day.titulo}</h2>
                             
-                            <p style="font-size: 1.1rem; color: #ddd; margin-bottom: 20px;">${day.historia.replace(/\n/g, '<br>')}</p>
+                            <p style="font-size: 1.1rem; color: #ddd; margin-bottom: 20px;">${(day.historia || "").replace(/\n/g, '<br>')}</p>
                             
                             <div class="smart-booking-card">
                                 <h3 style="margin:0 0 10px 0; font-size: 1.2rem;">🏨 ¿Aún no tienes hotel en ${location}?</h3>
@@ -1491,7 +1507,7 @@
 
             } catch (error) {
                 console.error(error);
-                errorBox.innerText = "⚠️ Se ha producido un error, vuelva a intentarlo o pruebe más tarde.";
+                errorBox.innerText = `⚠️ Se ha producido un error: ${error.message}. Inténtalo de nuevo.`;
                 errorBox.style.display = 'block';
             } finally {
                 spinner.style.display = 'none';
